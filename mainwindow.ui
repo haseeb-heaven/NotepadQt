@@ -10,6 +10,14 @@
     <height>600</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <pointsize>10</pointsize>
+   </font>
+  </property>
+  <property name="cursor">
+   <cursorShape>WhatsThisCursor</cursorShape>
+  </property>
   <property name="windowTitle">
    <string>Notepad - Qt</string>
   </property>
@@ -23,6 +31,12 @@
       <property name="autoFillBackground">
        <bool>false</bool>
       </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
      </widget>
     </item>
    </layout>
@@ -33,7 +47,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>25</height>
+     <height>28</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

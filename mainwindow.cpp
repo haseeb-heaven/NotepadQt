@@ -27,12 +27,13 @@ void MainWindow::on_actionOpen_triggered()
 {
     ui->notepadTxt->clear();
     auto qstr = g_Utils.Qt_ShowOpenFileDlg("Selecte text file","Text Files(*.txt);;All Files(*.*)",QUtils::Qt_GetAppPath(),true);
-    ui->notepadTxt->insertPlainText(qstr);
+    if(!qstr.isEmpty()) ui->notepadTxt->insertPlainText(qstr);
 }
 
 void MainWindow::on_actionSave_triggered()
 {
     auto qstr = ui->notepadTxt->toPlainText();
+    if(qstr.isEmpty()) {on_actionSave_As_triggered(); return;}
     g_Utils.Qt_WriteFile(g_Utils.Qt_GetFileName(),qstr,true);
     QFileInfo fi(g_Utils.Qt_GetFileName());
     g_Utils.Qt_ShowInfo("File '" + fi.completeBaseName() + "' saved successfully");
@@ -42,7 +43,7 @@ void MainWindow::on_actionSave_As_triggered()
 {
     auto file_name = g_Utils.Qt_ShowSaveFileDlg("Open the file");
     auto file_data = ui->notepadTxt->toPlainText();
-    g_Utils.Qt_WriteFile(file_name,file_data);
+    g_Utils.Qt_WriteFile(file_name,file_data,true);
     QFileInfo fi(file_name);
     g_Utils.Qt_ShowInfo("File '" + fi.completeBaseName() + "' saved successfully");
 }
@@ -51,7 +52,7 @@ void MainWindow::on_actionSave_As_triggered()
 void MainWindow::on_actionQuit_triggered()
 {
     int dlg_result = g_Utils.Qt_ShowDialog("Notepad is about to exit","Do you want to save unsaved changes");
-    if(dlg_result == QMessageBox::Yes){
+    if(dlg_result == QMessageBox::Yes){//Ask for to save changes before exit.
         on_actionSave_As_triggered();
     }
     QCoreApplication::quit();
@@ -88,6 +89,6 @@ void MainWindow::on_actionRedo_triggered()
 
 void MainWindow::on_actionAbout_NotepadQt_triggered()
 {
-    g_Utils.Qt_ShowInfo("Qt-Notepad is simple notepad application\nWritten by Haseeb Mir\n\nLanguage Framework  C++(17)/Qt v6.2");
+    g_Utils.Qt_ShowInfo("Qt-Notepad is simple notepad application\nWritten by Haseeb Mir\n\nLanguage Framework  C++(17) / Qt version 6.2.2");
 }
 
